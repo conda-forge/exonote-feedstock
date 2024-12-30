@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/exonote-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/exonote-{{ version }}.tar.gz
   sha256: 97ec5113ba2341dc033693ad120c58fb475f70782ba114cc56cad548063163f0
 
 build:
@@ -14,14 +14,15 @@ build:
     - exonote = exonote.__main__:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 1
+  number: 2
 
 requirements:
   host:
-    - python >=3.5
+    - python {{ python_min }}
     - pip
+    - setuptools
   run:
-    - python >=3.5
+    - python >={{ python_min }}
     - oscan
     - tkutil
 
@@ -33,6 +34,7 @@ test:
     - exonote --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/pyrustic/exonote
